@@ -10,6 +10,8 @@ public class JoculXsi0 {
             System.out.println("--Welcome to X&0 game!--");
             System.out.println("1.Start game.");
             System.out.println("0.Exit.");
+            System.out.println();
+            System.out.print("Please enter you option: ");
             Scanner scanner = new Scanner(System.in);
             option = scanner.nextInt();
             if(option == 1){
@@ -18,6 +20,7 @@ public class JoculXsi0 {
         }while(option != 0);
     }
     public static void dispalyMatrix(char[][] matrix){
+        System.out.println(); //cosmetic
         for(int i = 0 ; i < matrix.length ; i++) {
             System.out.print("Line " + i + " ");
             for (int j = 0; j < matrix[i].length; j++) {
@@ -25,20 +28,23 @@ public class JoculXsi0 {
             }
             System.out.println();
         }
+        System.out.println(); //cosmetic
     }
     public static void playGame(char[][] matrix){
         Scanner scanner = new Scanner(System.in);
         //initializing a boolean variable which will be used to exit the do-while loop
         boolean winner = false;
+        int turns = 1;
 
         do {
             boolean occupiedPlayer1 = true;
+            System.out.println("Starting turn number " + turns);
             // Player 1
             do {
                 System.out.println();
-                System.out.println("Player 1 enter a line no!");
+                System.out.print("Player 1 enter a line no! ");
                 int player1Line = scanner.nextInt();
-                System.out.println("Player 1 enter a column no!");
+                System.out.print("Player 1 enter a column no! ");
                 int player1Column = scanner.nextInt();
 
                 if (matrix[player1Line][player1Column] == 0) {
@@ -61,9 +67,12 @@ public class JoculXsi0 {
                 winner = true;
             }
 
+            if(winner == false && turns >=5){
+                System.out.println("There is no winner, the game has ended in a draw!!");
+            }
             //Player 2 - Computer
             //verifying player 1 did not win the game before player 2 playing
-            if (winner == false) {
+            if (winner == false && turns < 5) {
                 int minim = 0;
                 int maxim = 2;
                 int coef = maxim - minim + 1;
@@ -94,7 +103,8 @@ public class JoculXsi0 {
                     winner = true;
                 }
             }
-        }while(winner == false);
+            turns++;
+        }while(winner == false && turns <= 5);
 
     }
 
@@ -111,6 +121,12 @@ public class JoculXsi0 {
         } else if (matrix[0][0] == playerSymbol && matrix[1][1] == playerSymbol && matrix[2][2] == playerSymbol) {
             winner = true;
         } else if (matrix[0][2] == playerSymbol && matrix[1][1] == playerSymbol && matrix[2][0] == playerSymbol) {
+            winner = true;
+        } else if (matrix[0][0] == playerSymbol && matrix[1][0] == playerSymbol && matrix[2][0] == playerSymbol) {
+            winner = true;
+        } else if (matrix[0][1] == playerSymbol && matrix[1][1] == playerSymbol && matrix[2][1] == playerSymbol) {
+            winner = true;
+        } else if (matrix[0][2] == playerSymbol && matrix[1][2] == playerSymbol && matrix[2][2] == playerSymbol) {
             winner = true;
         }
         return winner;
